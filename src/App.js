@@ -21,35 +21,40 @@ function App() {
       equipo: "Front End",
       foto: "https://github.com/EnriqueJSV.png",
       nombre: "Enrique",
-      puesto: "Developer"
+      puesto: "Developer",
+      fav: true
     }, 
     {
       id: uuid(),
       equipo: "Programación",
       foto: "https://github.com/EnriqueJSV.png",
       nombre: "MJ",
-      puesto: "Developer"
+      puesto: "Developer",
+      fav: false
     },
     {
       id: uuid(),
       equipo: "UX y Diseño",
       foto: "https://github.com/EnriqueJSV.png",
       nombre: "Chuculo",
-      puesto: "Designer"
+      puesto: "Designer",
+      fav: false
     },
     {
       id: uuid(),
       equipo: "Programación",
       foto: "https://github.com/EnriqueJSV.png",
       nombre: "Josué",
-      puesto: "Developer"
+      puesto: "Developer",
+      fav: false
     },
     {
       id: uuid(),
       equipo: "Innovación y Gestión",
       foto: "https://github.com/EnriqueJSV.png",
       nombre: "María",
-      puesto: "Manager"
+      puesto: "Manager",
+      fav: false
     }
   ])
 
@@ -136,6 +141,24 @@ function App() {
     actualizarEquipos(equiposActualizados)
   }
 
+  // Crear equipo
+  const crearEquipo = (nuevoEquipo) => {
+    // console.log(nuevoEquipo)
+    actualizarEquipos([...equipos, { ...nuevoEquipo, id: uuid() }])
+  }
+
+  const like = (id) => {
+    // console.log("like a: ", id)
+    const colaboradoresActualizados = colaboradores.map((colaborador) => {
+      if(colaborador.id === id){
+        colaborador.fav = !colaborador.fav
+      }
+      return colaborador
+    })
+
+    actualizarColaboradores(colaboradoresActualizados)
+  }
+
   return (
     <div>
       <Header />
@@ -145,6 +168,7 @@ function App() {
         mostrarFormulario && <Formulario 
           equipos={equipos.map((equipo) => equipo.titulo)}
           registrarColaborador={registrarColaborador}
+          crearEquipo={crearEquipo}
         /> 
       }
 
@@ -157,6 +181,7 @@ function App() {
           colaboradores={colaboradores.filter(colaborador => colaborador.equipo === equipo.titulo)}
           eliminarColaborador={eliminarColaborador}
           actualizarColor={actualizarColor}
+          like={like}
           />
         )
           // console.log("Equipo: ",equipo)
